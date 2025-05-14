@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, Activity, ChevronLeft, ChevronRight } from 'lucide-react';
+import { MapPin, Activity, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
 import { ExplorationMode } from '../types';
 
 interface HeaderProps {
@@ -9,6 +9,8 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ mode, setMode }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [activeSubCategory, setActiveSubCategory] = useState<string | null>(null);
 
   const slides = [
     {
@@ -27,6 +29,27 @@ const Header: React.FC<HeaderProps> = ({ mode, setMode }) => {
       url: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/19/1e/da/2c/ermitage-d-akchour.jpg?w=900&h=-1&s=1"
     }
   ];
+
+  const categories = {
+    'Health': {
+      'Healthcare Facilities': ['Hospitals', 'Clinics', 'Health Centers', 'Diagnostic Centers', 'Emergency Services'],
+      'Medical Professionals': ['Doctors', 'Nurses', 'Allied Health Professionals', 'Alternative Medicine Practitioners'],
+      'Medical Services': ['Outpatient Services', 'Inpatient Services', 'Diagnostic Services', 'Therapeutic Services'],
+      'Pharmaceutical Services': ['Pharmacies', 'Drug Stores', 'Medical Supply Stores'],
+      'Public Health': ['Preventive Care', 'Health Campaigns', 'Epidemiology & Disease Control'],
+      'Mental Health': ['Mental Health Clinics', 'Therapists & Counselors', 'Rehabilitation Centers'],
+      'Health Insurance': ['Public Insurance', 'Private Insurance', 'Health Coverage Plans'],
+      'Wellness & Alternative Health': ['Fitness & Nutrition', 'Holistic Health', 'Spa & Wellness']
+    },
+    'Accommodation': {},
+    'Education': {},
+    'Work': {},
+    'Leisure': {},
+    'Business': {},
+    'Services': {},
+    'Everyday Life': {},
+    'Transport': {}
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -118,14 +141,54 @@ const Header: React.FC<HeaderProps> = ({ mode, setMode }) => {
       <nav className="bg-white border-b border-slate-200 py-3">
         <div className="container mx-auto px-4">
           <ul className="flex justify-center space-x-8">
-            {['Health', 'Education', 'Entertainment', 'Sports', 'Culture', 'Business'].map((item) => (
-              <li key={item}>
-                <a 
-                  href="#" 
-                  className="text-slate-600 hover:text-blue-600 transition-colors font-medium"
+            {Object.keys(categories).map((category) => (
+              <li 
+                key={category}
+                className="relative group"
+                onMouseEnter={() => setActiveCategory(category)}
+                onMouseLeave={() => setActiveCategory(null)}
+              >
+                <button 
+                  className="flex items-center text-slate-600 hover:text-blue-600 transition-colors font-medium"
                 >
-                  {item}
-                </a>
+                  {category}
+                  <ChevronDown size={16} className="ml-1" />
+                </button>
+                
+                {/* First Level Dropdown */}
+                {activeCategory === category && Object.keys(categories[category]).length > 0 && (
+                  <div className="absolute top-full left-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg py-2 min-w-[200px] z-50">
+                    {Object.keys(categories[category]).map((subCategory) => (
+                      <div
+                        key={subCategory}
+                        className="relative group/sub"
+                        onMouseEnter={() => setActiveSubCategory(subCategory)}
+                        onMouseLeave={() => setActiveSubCategory(null)}
+                      >
+                        <button className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-600 flex items-center justify-between">
+                          {subCategory}
+                          {categories[category][subCategory].length > 0 && (
+                            <ChevronRight size={14} />
+                          )}
+                        </button>
+                        
+                        {/* Second Level Dropdown */}
+                        {activeSubCategory === subCategory && categories[category][subCategory].length > 0 && (
+                          <div className="absolute top-0 left-full ml-1 bg-white border border-slate-200 rounded-lg shadow-lg py-2 min-w-[200px]">
+                            {categories[category][subCategory].map((item) => (
+                              <button
+                                key={item}
+                                className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-blue-600"
+                              >
+                                {item}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </li>
             ))}
           </ul>
