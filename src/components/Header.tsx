@@ -41,14 +41,55 @@ const Header: React.FC<HeaderProps> = ({ mode, setMode }) => {
       'Health Insurance': ['Public Insurance', 'Private Insurance', 'Health Coverage Plans'],
       'Wellness & Alternative Health': ['Fitness & Nutrition', 'Holistic Health', 'Spa & Wellness']
     },
-    'Accommodation': {},
-    'Education': {},
-    'Work': {},
-    'Leisure': {},
-    'Business': {},
-    'Services': {},
-    'Everyday Life': {},
-    'Transport': {}
+    'Accommodation': {
+      'Short-Term Stay': ['Hotels', 'Guesthouses', 'Hostels'],
+      'Long-Term Stay': ['Apartments', 'Co-living Spaces']
+    },
+    'Food & Drink': {
+      'Restaurants': ['Cuisine Type', 'Style'],
+      'Cafés & Bars': ['Cafés', 'Bars'],
+      'Food Services': ['Takeaway & Delivery', 'Street Food']
+    },
+    'Education': {
+      'Formal Education': ['Schools', 'Higher Education'],
+      'Informal & Continuing': ['Language Schools', 'Workshops'],
+      'Childcare': ['Nurseries', 'Montessori']
+    },
+    'Work': {
+      'Employment': ['Job Listings', 'Freelance'],
+      'Workspaces': ['Coworking Spaces', 'Business Offices'],
+      'Networking': ['Meetups', 'Professional Events']
+    },
+    'Everyday Life': {
+      'Groceries & Shopping': ['Supermarkets', 'Farmers Markets'],
+      'Household Services': ['Cleaning', 'Maintenance'],
+      'Local Life': ['Community Centers', 'Libraries']
+    },
+    'Transport': {
+      'Public Transport': ['Bus', 'Metro', 'Train'],
+      'Private & Rental': ['Car Rentals', 'Bike/Scooter Rentals'],
+      'Mobility Services': ['Ride-hailing', 'Taxi Services']
+    },
+    'Leisure': {
+      'Recreation': ['Parks', 'Beaches'],
+      'Cultural': ['Museums', 'Historical Sites'],
+      'Entertainment': ['Cinemas', 'Nightlife']
+    },
+    'Business': {
+      'Real Estate': ['Buy', 'Rent'],
+      'Investment': ['Commercial', 'Residential'],
+      'Legal & Admin': ['Permits', 'Business Setup']
+    },
+    'Services': {
+      'Health & Wellness': ['Clinics', 'Therapists'],
+      'Beauty & Grooming': ['Hair Salons', 'Spas'],
+      'Professional': ['Lawyers', 'Consultants']
+    },
+    'Things To Do': {
+      'By Season': ['Summer Activities', 'Winter Activities'],
+      'By Group': ['Solo', 'Family'],
+      'By Mood': ['Relaxing', 'Adventurous']
+    }
   };
 
   useEffect(() => {
